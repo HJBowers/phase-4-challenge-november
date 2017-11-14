@@ -1,5 +1,6 @@
 const db = require( '../connection' )
 
+// Albums
 const getAlbums = () => {
   return db.any(`
     SELECT * FROM albums
@@ -21,6 +22,7 @@ const getAlbumByID = ( albumID ) => {
     })
 }
 
+// Reviews
 const getReviewsReturnByDate = () => {
   return db.any(`
     SELECT
@@ -64,6 +66,26 @@ const getReviewsByAlbumID = ( albumID ) => {
   })
 }
 
+const getReviewsByUserId = (userId) => {
+  return db.query(`
+    SELECT
+    reviews.*, users.name, albums.title
+    FROM
+    reviews
+    INNER JOIN
+    users
+    ON
+    reviews.user_id = users.id
+    INNER JOIN
+    albums
+    ON
+    reviews.album_id = albums.id
+    WHERE
+    reviews.user_id = $1
+    `, [userId])
+  }
+
+
 // Users
 const createUser = (name, email, password) => {
   return db.one(`
@@ -95,11 +117,13 @@ const findUser = (email) => {
   })
 }
 
+
 module.exports = {
   getAlbums,
   getAlbumByID,
   getReviewsReturnByDate,
   getReviewsByAlbumID,
+  getReviewsByUserId,
   createUser,
   findUser
 }
