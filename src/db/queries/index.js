@@ -85,6 +85,20 @@ const getReviewsByUserId = (userId) => {
     `, [userId])
   }
 
+const removeReview = (id) => {
+  return db.none('DELETE FROM reviews WHERE id = $1', [id])
+}
+
+const createNewReview = (user_id, description, album_id) => {
+  return db.query(`
+    INSERT INTO
+    reviews (user_id, description, album_id)
+    VALUES
+    ($1::INTEGER, $2::text, $3::INTEGER)
+    RETURNING
+    *
+    `, [user_id, description, album_id])
+  }
 
 // Users
 const createUser = (name, email, password) => {
@@ -124,6 +138,8 @@ module.exports = {
   getReviewsReturnByDate,
   getReviewsByAlbumID,
   getReviewsByUserId,
+  removeReview,
+  createNewReview,
   createUser,
   findUser
 }

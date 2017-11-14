@@ -1,0 +1,18 @@
+<%- include partials/header %>
+<%- include partials/navbar %>
+
+<h1>New Review for <%- album.title %>:</h1>
+<div>
+  <form  method="post" action="/newReview" >
+    <input type="text" name="user_id" value="<%=user%>" hidden>
+    <br>
+    <input type="text" name="album_id" value="<%=album.id%>" hidden>
+    <br>
+    <textarea cols="50" rows="4" name="description"></textarea>
+    <br>
+    <button type="submit">Submit Review</button>
+  </form>
+  <h4> <%- message %> </h4>
+</div>
+
+<%- include partials/footer %>
