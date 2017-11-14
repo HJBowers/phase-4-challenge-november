@@ -1,0 +1,31 @@
+<%- include partials/header %>
+<%- include partials/navbar %>
+
+<div class="container row justify-content-md-center">
+  <div class="col col-lg-5">
+    <h1>Create your account: </h1>
+    <form method="post" action="/signup" class="form-group">
+      <div class="row justify-content-between">
+        <label for="name">Name: &nbsp;</label>
+        <input name="name" type="text" class="col-8 form-control" id="name" placeholder="name">
+      </div>
+      <div class="row justify-content-between">
+        <label for="email">Email: &nbsp;</label>
+        <input name="email" type="text" class="col-8 form-control" id="email" placeholder="email">
+      </div>
+      <div class="row justify-content-between">
+        <label for="password">Password: &nbsp;</label>
+        <input name="password" type="password" class="col-8 form-control" id="password" placeholder="password">
+      </div>
+      <div class="row justify-content-between">
+        <label for="confirm-password">Confirm Password: &nbsp;</label>
+        <input name="confirm_password" type="password" class="col-8 form-control" id="confirm-password" placeholder="confirm password">
+      </div>
+      <br>
+      <input type="submit" class="btn btn-primary" value="Sign Up"/>
+    </form>
+    <h4> <%- message %> </h4>
+  </div>
+</div>
+
+<% include partials/footer %>

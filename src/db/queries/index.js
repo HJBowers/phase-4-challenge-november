@@ -64,9 +64,42 @@ const getReviewsByAlbumID = ( albumID ) => {
   })
 }
 
+// Users
+const createUser = (name, email, password) => {
+  return db.one(`
+    INSERT INTO
+      users (name, email, password)
+    VALUES
+      ($1::text, $2::text, $3::text)
+    RETURNING
+      *
+  `, [name, email, password])
+  .catch((error) => {
+     console.log('\nError in createUser query\n')
+     throw error
+  })
+}
+
+const findUser = (email) => {
+  return db.oneOrNone(`
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      email = $1
+  `, [email])
+  .catch((error) => {
+     console.log('\nError in findUser query\n')
+     throw error
+  })
+}
+
 module.exports = {
   getAlbums,
   getAlbumByID,
   getReviewsReturnByDate,
-  getReviewsByAlbumID
+  getReviewsByAlbumID,
+  createUser,
+  findUser
 }

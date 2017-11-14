@@ -1,13 +1,13 @@
 const router = require( 'express' ).Router()
 const albums = require( './albums')
 // const reviews = require( './reviews')
-// const signup = require('./signup')
+const signup = require('./signup')
 // const login = require('./login')
-// const profile = require('./profile')
+const profile = require('./profile')
 
-// router.use('/signup', signup)
+router.use('/signup', signup)
 // router.use('/login', login)
-// router.use('/profile', profile)
+router.use('/users', profile)
 router.use( '/', albums )
 // router.use( '/', reviews )
 
