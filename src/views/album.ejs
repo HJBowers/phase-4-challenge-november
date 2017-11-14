@@ -15,13 +15,20 @@
       </div>
       <br></br>
         <% reviews.forEach((review) => { %>
-          <h5><%=album.title%></h5>
-          <span>Review Date: <%=review.date_created%></span>
-          <br>
-          <span>Description: <%=review.description%></span>
-          <br>
-          <span>Author: <%=review.name%></span>
-          <br></br>
+          <div id="<%= review.id %>">
+            <h5><%=album.title%></h5>
+            <span>Review Date: <%= moment(review.date_created).format('MMM DD, YYYY') %></span>
+            <br>
+            <span>Description: <%=review.description%></span>
+            <br>
+            <span>Author: <%=review.name%></span>
+            <br>
+            <span>User Logged In: <%=user.name%></span>
+            <% if(user.name === review.name) { %>
+              <button onClick="deletePopup(<%=review.id%>)" class="pull-right fa fa-trash" ></button>
+            <% } %>
+            <br></br>
+          </div>
         <% }) %>
     </div>
   </div>

@@ -31,4 +31,11 @@ router.post('/newReview', (req, res) => {
   }
 })
 
+router.delete('/review/delete/:id', (req, res) => {
+  return db.removeReview(req.params.id)
+  .then(() => res.json({message: 'successful delete'}))
+  .catch(error => res.status(500).render('error', {error}))
+})
+
+
 module.exports = router

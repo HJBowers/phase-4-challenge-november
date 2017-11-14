@@ -1,4 +1,5 @@
 const router = require( 'express' ).Router()
+const moment = require('moment')
 const db = require('../queries/index')
 
 router.get('/:id', (req, res) => {
@@ -8,7 +9,7 @@ router.get('/:id', (req, res) => {
   } else {
     return db.getReviewsByUserId(req.session.user.id)
     .then((reviews) => {
-      res.render('profile', {user: req.session.user, edit: false, reviews})
+      res.render('profile', {user: req.session.user, edit: false, reviews, moment})
     })
   }
 })
