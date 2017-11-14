@@ -1,10 +1,39 @@
-  <h2>Records</h2>
+<%- include partials/header %>
+<%- include partials/navbar %>
 
-  <div class="album-list">
-    <% albums.forEach(function(album) { %>
-      <div>
-        <h5><a href="/albums/<%= album.id %>"><%= album.title %></a></h5>
-        <span><%= album.artist %></span>
-      </div>
-    <% }) %>
+  <div id="banner">
+    <img class="bannerImg" src="http://www.eternallyentertainment.com/wp-content/uploads/2017/03/cropped-vinyl-banner.jpg" alt="mountains and purple skies"/>
   </div>
+
+  <div class="wrapper">
+    <div class="album-list">
+      <h2>Records</h2>
+      <% albums.forEach(function(album) { %>
+        <div>
+          <h5><a href="/albums/<%= album.id %>"><%= album.title %></a></h5>
+          <span><%= album.artist %></span>
+          <br></br>
+        </div>
+      <% }) %>
+    </div>
+    <div class="reviews-list">
+      <h2>Recent Reviews</h2>
+      <% var recentReviews = reviews.slice(0, 3)
+         recentReviews.forEach(function(review) { %>
+            <div>
+              <div class="titleContainer">
+                <h5><a href="/albums/<%= review.album_id %>"><%= review.title %></a></h5>
+                <span><%= (review.date_created)%></span>
+              </div>
+              <span><%= review.description %></span>
+              <br>
+              <div class="pull-right">
+                <span>By:  <%= review.name %></span>
+              </div>
+            </div>
+            <br></br>
+          <% }) %>
+    </div>
+  </div>
+
+<%- include partials/footer %>
