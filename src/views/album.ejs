@@ -1,18 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Vinyl : <%= album.title %></title>
-  <link rel="stylesheet" type="text/css" href="/style.css">
-  <script type="text/javascript" src="/script.js"></script>
-</head>
-<body>
+<%- include partials/header %>
+<%- include partials/navbar %>
 
-  <h1><%= album.title %></h1>
-  <em>by <%= album.artist %></em>
 
-  <h2>Reviews</h2>
+  <div class="container">
+    <div class="col">
+      <h1><a href="/albums/<%= album.id %>"><%= album.title %></a></h1>
+      <div class="row">
+        <div class="col">
+          <h2>Reviews</h2>
+        </div>
+        <% if(user) { %>
+          <a class="btn btn-secondary" href="/albums/<%= album.id %>/reviews/new">Add Review</a>
+        <% } %>
+      </div>
+      <br></br>
+        <% reviews.forEach((review) => { %>
+          <h5><%=album.title%></h5>
+          <span>Review Date: <%=review.date_created%></span>
+          <br>
+          <span>Description: <%=review.description%></span>
+          <br>
+          <span>Author: <%=review.name%></span>
+          <br></br>
+        <% }) %>
+    </div>
+  </div>
 
-  <!-- TODO: implement album reviews -->
-
-</body>
-</html>
+<%- include partials/footer %>
