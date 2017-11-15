@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const pgSession = require( 'connect-pg-simple')(session)
 const morgan = require( 'morgan' )
+const middlewares = require('./db/middlewares')
 const routes = require('./db/routes')
 
 const port = process.env.PORT
@@ -19,6 +20,11 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: false}))
 
 app.use(morgan('tiny'));
+
+app.use((request, response, next) => {
+  response.locals.query = ''
+  next()
+})
 
 app.use(session({
   name: process.env.KEY,

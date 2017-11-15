@@ -29,4 +29,16 @@ router.get('/albums/:albumID', (req, res) => {
   .catch(error => res.status(500).render('error', {error}))
 })
 
+router.get('/search', (req,res) => {
+  const query = request.query.q
+  // console.log("QUERY ====== ", query)
+  return db.search(query)
+  .then(function(albums) {
+    // console.log("Albums ====== ", albums);
+    if (albums) return response.render('albums/index', { query, albums })
+    next()
+  })
+  .catch( error => next(error))
+})
+
 module.exports = router

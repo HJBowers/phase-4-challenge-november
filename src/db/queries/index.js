@@ -131,6 +131,22 @@ const findUser = (email) => {
   })
 }
 
+// Search albums
+const search = function(searchQuery){
+  return db.query(`
+    SELECT
+      *
+    FROM
+      albums
+    WHERE
+      lower(title) =b $1::text
+    `,
+    [`%${searchQuery.toLowerCase().replace(/\s+/,'%')}%`])
+    .catch(error => {
+      console.error({message: 'Error occurred while executing search',
+                     arguments: arguments});
+      throw error});
+}
 
 module.exports = {
   getAlbums,
@@ -141,5 +157,6 @@ module.exports = {
   removeReview,
   createNewReview,
   createUser,
-  findUser
+  findUser,
+  search
 }

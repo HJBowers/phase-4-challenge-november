@@ -1,6 +1,10 @@
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="/">Vinyl</a>
   <div class="nav justify-content-right">
+    <form method="get" action="/albums/search" class="search-form">
+      <input name="q" type="search" placeholder="search" value="<%= query %>" autofocus/>
+      <input type="submit" style="display: none" />
+    </form>
     <% if(user) { %>
       <a class="nav-link" href="/users/<%= user.id %>">Profile</a>
       <a class="nav-link" href="/logout">Log Out</a>
