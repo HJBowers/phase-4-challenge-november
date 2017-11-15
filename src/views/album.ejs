@@ -23,9 +23,10 @@
             <br>
             <span>Author: <%=review.name%></span>
             <br>
-            <span>User Logged In: <%=user.name%></span>
-            <% if(user.name === review.name) { %>
-              <button onClick="deletePopup(<%=review.id%>)" class="pull-right fa fa-trash" ></button>
+            <% if(user) { %>
+              <% if(user.name === review.name) { %>
+                <button onClick="deletePopup(<%=review.id%>)" class="pull-right fa fa-trash" ></button>
+              <% } %>
             <% } %>
             <br></br>
           </div>
