@@ -1,0 +1,18 @@
+<%- include partials/header %>
+<%- include partials/navbar %>
+
+  <div class="container">
+    <div class="col">
+      <h1>Search Results<h1>
+        <br>
+      <% albums.forEach(album => { %>
+        <div>
+          <h3><a href="/albums/<%= album.id %>"><%= album.title %></a></h3>
+          <h5><%= album.artist %></h5>
+          <br>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+<%- include partials/footer %>

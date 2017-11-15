@@ -6,7 +6,7 @@ const getAlbums = () => {
     SELECT * FROM albums
     `, [])
     .catch( error => {
-      console.error( {message: "Get all albums error", error, arguments: arguments})
+      console.error( {message: "getAlbums error", error, arguments: arguments})
       throw error
     })
 }
@@ -17,7 +17,7 @@ const getAlbumByID = ( albumID ) => {
     WHERE id = $1
     `, [ albumID ])
     .catch( error => {
-      console.error( {message: "Get album by ID", error, arguments: arguments})
+      console.error( {message: "getAlbumByID error", error, arguments: arguments})
       throw error
     })
 }
@@ -41,6 +41,10 @@ const getReviewsReturnByDate = () => {
       date_created
     DESC
     `, [])
+    .catch( error => {
+      console.error( {message: "getReviewsReturnByDate error", error, arguments: arguments})
+      throw error
+    })
   }
 
 const getReviewsByAlbumID = ( albumID ) => {
@@ -61,7 +65,7 @@ const getReviewsByAlbumID = ( albumID ) => {
       album_id = $1
     `, [albumID])
   .catch( error => {
-    console.error( {message: "Get all reviews error",error, arguments: arguments})
+    console.error( {message: "getReviewsByAlbumID error",error, arguments: arguments})
     throw error
   })
 }
@@ -83,10 +87,18 @@ const getReviewsByUserId = (userId) => {
     WHERE
     reviews.user_id = $1
     `, [userId])
+    .catch( error => {
+      console.error( {message: "getReviewsByUserId error",error, arguments: arguments})
+      throw error
+    })
   }
 
 const removeReview = (id) => {
   return db.none('DELETE FROM reviews WHERE id = $1', [id])
+  .catch( error => {
+    console.error( {message: "removeReview error",error, arguments: arguments})
+    throw error
+  })
 }
 
 const createNewReview = (user_id, description, album_id) => {
@@ -98,6 +110,10 @@ const createNewReview = (user_id, description, album_id) => {
     RETURNING
     *
     `, [user_id, description, album_id])
+    .catch( error => {
+      console.error( {message: "createNewReview error",error, arguments: arguments})
+      throw error
+    })
   }
 
 // Users
@@ -132,14 +148,14 @@ const findUser = (email) => {
 }
 
 // Search albums
-const search = function(searchQuery){
+const search = (searchQuery) => {
   return db.query(`
     SELECT
       *
     FROM
       albums
     WHERE
-      lower(title) =b $1::text
+      LOWER(title || artist) LIKE $1::text
     `,
     [`%${searchQuery.toLowerCase().replace(/\s+/,'%')}%`])
     .catch(error => {

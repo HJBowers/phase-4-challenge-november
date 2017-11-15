@@ -29,13 +29,11 @@ router.get('/albums/:albumID', (req, res) => {
   .catch(error => res.status(500).render('error', {error}))
 })
 
-router.get('/search', (req,res) => {
-  const query = request.query.q
-  // console.log("QUERY ====== ", query)
-  return db.search(query)
-  .then(function(albums) {
-    // console.log("Albums ====== ", albums);
-    if (albums) return response.render('albums/index', { query, albums })
+router.get('/search', (req,res,next) => {
+  const query = req.query.q
+  db.search(query)
+  .then((albums) => {
+    if (albums) return res.render('search', {albums, user: req.session.user})
     next()
   })
   .catch( error => next(error))

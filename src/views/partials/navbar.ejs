@@ -1,8 +1,8 @@
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="/">Vinyl</a>
   <div class="nav justify-content-right">
-    <form method="get" action="/albums/search" class="search-form">
-      <input name="q" type="search" placeholder="search" value="<%= query %>" autofocus/>
+    <form method="get" action="/search" class="search-form">
+      <input name="q" type="search" placeholder="search" autofocus/>
       <input type="submit" style="display: none" />
     </form>
     <% if(user) { %>

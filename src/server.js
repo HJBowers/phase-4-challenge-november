@@ -20,11 +20,11 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: false}))
 
 app.use(morgan('tiny'));
-
-app.use((request, response, next) => {
-  response.locals.query = ''
-  next()
-})
+// 
+// app.use((request, response, next) => {
+//   response.locals.query = ''
+//   next()
+// })
 
 app.use(session({
   name: process.env.KEY,
