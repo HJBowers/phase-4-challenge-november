@@ -1,5 +1,22 @@
 const router = require( 'express' ).Router()
+const moment = require('moment')
 const db = require('../queries/index')
+
+router.get('/reviews', (req, res) =>{
+  const page = req.query.page || 1
+  const limit = 4
+  const offset = (page - 1) * limit
+  const numPageLinks = 4
+  const pageStart = page
+  const lastPage = numPageLinks + pageStart
+  const numPageLinksLimit = numPageLinks * limit
+  const isMoreRows = db.numRowsAfterOffset(offset, numPageLinksLimit)
+  db.getAllReviews(limit, offset)
+  .then((reviews) => {
+    res.render('allReviews', {reviews, user: req.session.user, moment, pageStart, lastPage})
+  })
+  .catch(error => res.status(500).render('error', {error}))
+})
 
 router.get('/albums/:albumID/reviews/new', (req, res) => {
   albumID = req.params.albumID

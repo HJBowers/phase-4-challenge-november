@@ -1,0 +1,24 @@
+<%- include partials/header %>
+<%- include partials/navbar %>
+
+  <div class="container">
+    <div class="col">
+      <h2>All Reviews</h2>
+      <%- include partials/pagination %>
+      <% reviews.forEach((review) => { %>
+        <div id="<%= review.album_id %>">
+          <h3><a href="/albums/<%= review.id %>"><%= review.title %></a></h3>
+          <span>Review Date: <%= moment(review.date_created).format('MMM DD, YYYY') %></span>
+          <br>
+          <span>Description: <%=review.description%></span>
+          <br>
+          <span>Author: <%=review.name%></span>
+          <br></br>
+        </div>
+      <% }) %>
+      <%- include partials/pagination %>
+
+    </div>
+  </div>
+
+<%- include partials/footer %>

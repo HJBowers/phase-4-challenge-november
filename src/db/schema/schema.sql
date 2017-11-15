@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS albums;
 CREATE TABLE albums (
-  id SERIAL PRIMARY KEY,
+  album_id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   artist VARCHAR(255) NOT NULL
 );
@@ -22,5 +22,5 @@ CREATE TABLE reviews (
   description TEXT NOT NULL,
   date_created TIMESTAMP DEFAULT current_timestamp,
   FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (album_id) REFERENCES albums(id)
+  FOREIGN KEY (album_id) REFERENCES albums(album_id)
 );

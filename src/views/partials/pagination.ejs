@@ -1,0 +1,8 @@
+<% if ((pageStart - 2) > 0) { %>
+  <a href="/reviews/?page=<%= pageStart - 2 %>"> <<< </a>
+<% } %>
+
+<% for(var i=pageStart; i< (pageStart + lastPage); i++) { %>
+  <a href="/reviews/?page=<%= i %>"> <%= i %> <a>
+<% } %>
+<a href="/reviews/?page=<%= pageStart + 2 %>"> >>> </a>

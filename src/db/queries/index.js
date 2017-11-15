@@ -3,26 +3,64 @@ const db = require( '../connection' )
 // Albums
 const getAlbums = () => {
   return db.any(`
-    SELECT * FROM albums
+    SELECT
+      *
+    FROM
+      albums
     `, [])
     .catch( error => {
-      console.error( {message: "Get all albums error", error, arguments: arguments})
+      console.error( {message: "getAlbums error", error, arguments: arguments})
       throw error
     })
 }
 
 const getAlbumByID = ( albumID ) => {
   return db.any(`
-    SELECT * FROM albums
-    WHERE id = $1
+    SELECT
+      *
+    FROM
+      albums
+    WHERE
+      id = $1
     `, [ albumID ])
     .catch( error => {
-      console.error( {message: "Get album by ID", error, arguments: arguments})
+      console.error( {message: "getAlbumByID error", error, arguments: arguments})
       throw error
     })
 }
 
 // Reviews
+const getAllReviews = (limit, offset) => {
+  return db.query(`
+  SELECT
+    reviews.*, users.name, albums.title, albums.album_id
+  FROM
+    reviews
+  INNER JOIN
+    users
+  ON
+    reviews.user_id = users.id
+  INNER JOIN
+    albums
+  ON
+    reviews.album_id = albums.album_id
+  LIMIT
+    $1
+  OFFSET
+    $2
+  `, [limit, offset])
+  .catch( error => {
+    console.error( {message: "getAllReviews error", error, arguments: arguments})
+    throw error
+  })
+}
+
+const numRowsAfterOffset = (offset, numPageLinksLimit) => {
+  db.query(`
+    
+  `)
+}
+
 const getReviewsReturnByDate = () => {
   return db.any(`
     SELECT
@@ -36,7 +74,7 @@ const getReviewsReturnByDate = () => {
     INNER JOIN
       albums
     ON
-      reviews.album_id = albums.id
+      reviews.album_id = albums.album_id
     ORDER BY
       date_created
     DESC
@@ -56,7 +94,7 @@ const getReviewsByAlbumID = ( albumID ) => {
     INNER JOIN
       albums
     ON
-      reviews.album_id = albums.id
+      reviews.album_id = albums.album_id
     WHERE
       album_id = $1
     `, [albumID])
@@ -69,19 +107,19 @@ const getReviewsByAlbumID = ( albumID ) => {
 const getReviewsByUserId = (userId) => {
   return db.query(`
     SELECT
-    reviews.*, users.name, albums.title
+      reviews.*, users.name, albums.title
     FROM
-    reviews
+      reviews
     INNER JOIN
-    users
+      users
     ON
-    reviews.user_id = users.id
+      reviews.user_id = users.id
     INNER JOIN
-    albums
+      albums
     ON
-    reviews.album_id = albums.id
+      reviews.album_id = albums.album_id
     WHERE
-    reviews.user_id = $1
+      reviews.user_id = $1
     `, [userId])
   }
 
@@ -92,9 +130,9 @@ const removeReview = (id) => {
 const createNewReview = (user_id, description, album_id) => {
   return db.query(`
     INSERT INTO
-    reviews (user_id, description, album_id)
+      reviews (user_id, description, album_id)
     VALUES
-    ($1::INTEGER, $2::text, $3::INTEGER)
+      ($1::INTEGER, $2::text, $3::INTEGER)
     RETURNING
     *
     `, [user_id, description, album_id])
@@ -135,6 +173,7 @@ const findUser = (email) => {
 module.exports = {
   getAlbums,
   getAlbumByID,
+  getAllReviews,
   getReviewsReturnByDate,
   getReviewsByAlbumID,
   getReviewsByUserId,
